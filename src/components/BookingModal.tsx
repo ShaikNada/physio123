@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Calendar, Clock, User, Phone, Mail, X, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -33,6 +33,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
     time: '',
     message: ''
   });
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const services = [
     'Sports Injury Recovery',
@@ -48,26 +49,80 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
     '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
   ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Validate form fields
+  useEffect(() => {
+    const isValid = 
+      formData.firstName.trim() !== '' &&
+      formData.phone.trim() !== '' &&
+      formData.service !== '' &&
+      formData.date !== '' &&
+      formData.time !== '' &&
+      formData.message.trim() !== '';
+    setIsFormValid(isValid);
+  }, [formData]);
+
+  const validateStep1 = () => {
+    const errors = [];
+    if (!formData.firstName.trim()) {
+      errors.push({ field: 'First Name', message: 'First Name is required' });
+    }
+    if (!formData.phone.trim()) {
+      errors.push({ field: 'Phone Number', message: 'Phone Number is required' });
+    }
+    return errors;
+  };
+
+  const validateStep2 = () => {
+    const errors = [];
+    if (!formData.service) {
+      errors.push({ field: 'Service', message: 'Service selection is required' });
+    }
+    if (!formData.date) {
+      errors.push({ field: 'Date', message: 'Preferred Date is required' });
+    }
+    if (!formData.time) {
+      errors.push({ field: 'Time', message: 'Preferred Time is required' });
+    }
+    if (!formData.message.trim()) {
+      errors.push({ field: 'Condition', message: 'Condition description is required' });
+    }
+    return errors;
+  };
+
+  const showValidationErrors = (errors: { field: string; message: string }[]) => {
+    errors.forEach(error => {
+      toast({
+        title: `Missing ${error.field}`,
+        description: error.message,
+        variant: "destructive",
+      });
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    const errors = [...validateStep1(), ...validateStep2()];
+    if (errors.length > 0) {
+      showValidationErrors(errors);
+      return;
+    }
     
+    setIsLoading(true);
+
     try {
       await saveBooking(formData);
-      console.log('Booking submitted:', formData);
       setIsSubmitted(true);
       toast({
         title: "Booking Confirmed!",
         description: "Your appointment has been successfully booked. We'll contact you shortly.",
       });
-      
+
       setTimeout(() => {
         setIsSubmitted(false);
         setStep(1);
@@ -95,7 +150,24 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const nextStep = () => setStep(step + 1);
+  const nextStep = () => {
+    if (step === 1) {
+      const errors = validateStep1();
+      if (errors.length > 0) {
+        showValidationErrors(errors);
+        return;
+      }
+    }
+    if (step === 2) {
+      const errors = validateStep2();
+      if (errors.length > 0) {
+        showValidationErrors(errors);
+        return;
+      }
+    }
+    setStep(step + 1);
+  };
+
   const prevStep = () => setStep(step - 1);
 
   if (isSubmitted) {
@@ -132,9 +204,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                 }`}>
                   {i}
                 </div>
-                {i < 3 && <div className={`w-12 h-0.5 ${
-                  step > i ? 'bg-physio-blue' : 'bg-gray-200'
-                }`} />}
+                {i < 3 && <div className={`w-12 h-0.5 ${step > i ? 'bg-physio-blue' : 'bg-gray-200'}`} />}
               </div>
             ))}
           </div>
@@ -163,27 +233,25 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name *
+                    Last Name
                   </label>
                   <Input
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    required
                     className="h-12"
                   />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address *
+                  Email Address
                 </label>
                 <Input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  required
                   className="h-12"
                 />
               </div>
@@ -200,7 +268,11 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   className="h-12"
                 />
               </div>
-              <Button type="button" onClick={nextStep} className="w-full h-12 bg-gradient-physio">
+              <Button 
+                type="button" 
+                onClick={nextStep} 
+                className="w-full h-12 bg-gradient-physio"
+              >
                 Continue
               </Button>
             </div>
@@ -258,12 +330,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Message
+                  Condition *
                 </label>
                 <Textarea
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
+                  required
                   placeholder="Tell us about your condition or any specific concerns..."
                   className="min-h-[100px]"
                 />
@@ -272,7 +345,11 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                 <Button type="button" onClick={prevStep} variant="outline" className="flex-1 h-12">
                   Back
                 </Button>
-                <Button type="button" onClick={nextStep} className="flex-1 h-12 bg-gradient-physio">
+                <Button 
+                  type="button" 
+                  onClick={nextStep} 
+                  className="flex-1 h-12 bg-gradient-physio"
+                >
                   Review
                 </Button>
               </div>
@@ -292,7 +369,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Email:</span>
-                    <span>{formData.email}</span>
+                    <span>{formData.email || 'Not provided'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Phone:</span>
@@ -312,7 +389,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                   </div>
                   {formData.message && (
                     <div>
-                      <span className="font-medium">Message:</span>
+                      <span className="font-medium">Condition:</span>
                       <p className="text-sm text-gray-600 mt-1">{formData.message}</p>
                     </div>
                   )}
@@ -322,8 +399,8 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                 <Button type="button" onClick={prevStep} variant="outline" className="flex-1 h-12">
                   Back
                 </Button>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isLoading}
                   className="flex-1 h-12 bg-gradient-physio"
                 >

@@ -87,20 +87,7 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-16 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
-          <div className="bg-gradient-physio text-white rounded-3xl p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl lg:text-3xl font-playfair font-bold mb-4">
-              Ready to Start Your Healing Journey?
-            </h3>
-            <p className="text-lg mb-6 opacity-90">
-              Book a consultation today and take the first step towards better health
-            </p>
-            <button className="bg-white text-physio-blue px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all transform hover:scale-105">
-              Schedule Appointment
-            </button>
-          </div>
-        </div>
+       
       </div>
     </section>
   );

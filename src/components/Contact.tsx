@@ -62,7 +62,7 @@ const Contact = () => {
   const handleCardClick = (type: string) => {
     switch (type) {
       case 'phone':
-        window.open('tel:+1234567890', '_self');
+        window.open('tel:+91 8897261748', '_self');
         break;
       case 'email':
         window.open('mailto:info@physioheal.com?subject=Physiotherapy Inquiry&body=Hello, I would like to inquire about your services.', '_self');
@@ -71,7 +71,7 @@ const Contact = () => {
         window.open('https://maps.google.com?q=123+Health+Street,+Medical+District,+New+York,+NY+10001', '_blank');
         break;
       case 'emergency':
-        window.open('tel:+1234567891', '_self');
+        window.open('tel:+91 88972 61748', '_self');
         break;
       default:
         break;
@@ -79,19 +79,20 @@ const Contact = () => {
   };
 
   const contactInfo = [
+    
     {
-      icon: MapPin,
-      title: "Visit Our Clinic",
-      details: ["123 Health Street", "Medical District", "New York, NY 10001"],
+      icon: Clock,
+      title: "Business Hours",
+      details: ["Mon-Fri: 8:00 AM - 8:00 PM", "Sat-Sun: 9:00 AM - 5:00 PM"],
       color: "text-physio-blue",
       bgColor: "bg-physio-blue/10",
-      type: "location",
-      action: "Get Directions"
+      type: "emergency",
+      action: "Emergency Call"
     },
     {
       icon: Phone,
       title: "Call Us",
-      details: ["(123) 456-7890", "Emergency: (123) 456-7891"],
+      details: ["(91) 8897261748 ", "Emergency: (91) 8897261748"],
       color: "text-physio-green",
       bgColor: "bg-physio-green/10",
       type: "phone",
@@ -105,15 +106,6 @@ const Contact = () => {
       bgColor: "bg-physio-teal/10",
       type: "email",
       action: "Send Email"
-    },
-    {
-      icon: Clock,
-      title: "Business Hours",
-      details: ["Mon-Fri: 8:00 AM - 8:00 PM", "Sat-Sun: 9:00 AM - 5:00 PM"],
-      color: "text-physio-blue",
-      bgColor: "bg-physio-blue/10",
-      type: "emergency",
-      action: "Emergency Call"
     }
   ];
 
@@ -163,19 +155,7 @@ const Contact = () => {
               ))}
 
               {/* Quick Book Button */}
-              <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group transform hover:scale-105 hover:-translate-y-2 bg-gradient-physio cursor-pointer">
-                <CardContent className="p-6 text-center">
-                  <h3 className="font-semibold text-white mb-2">Need Immediate Care?</h3>
-                  <p className="text-white/90 text-sm mb-4">Book your appointment in under 2 minutes</p>
-                  <Button 
-                    onClick={() => setIsBookingOpen(true)}
-                    variant="outline" 
-                    className="bg-white text-physio-blue hover:bg-gray-100 border-white group-hover:scale-105 transition-all duration-300"
-                  >
-                    Quick Book
-                  </Button>
-                </CardContent>
-              </Card>
+              
             </div>
 
             {/* Contact Form */}
@@ -190,18 +170,35 @@ const Contact = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="group">
                         <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
-                          Full Name *
+                        Name *
                         </label>
                         <Input
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
-                          placeholder="Enter your full name"
+                          placeholder="Enter your name"
                           required
                           className="h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
                         />
                       </div>
                       
+                      <div className="group">
+                         <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
+                          Phone Number
+                        </label>
+                        <Input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          placeholder="Enter your phone number"
+                          className="h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
+                        />
+                        
+                      </div>
+                    </div>
+
+                    <div >
                       <div className="group">
                         <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
                           Email Address *
@@ -216,41 +213,8 @@ const Contact = () => {
                           className="h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
                         />
                       </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="group">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
-                          Phone Number
-                        </label>
-                        <Input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="Enter your phone number"
-                          className="h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
-                        />
-                      </div>
                       
-                      <div className="group">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
-                          Service Needed
-                        </label>
-                        <select
-                          name="service"
-                          value={formData.service}
-                          onChange={handleInputChange}
-                          className="w-full h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-physio-blue hover:border-physio-blue/50 transition-all duration-300"
-                        >
-                          <option value="">Select a service</option>
-                          <option value="sports-injury">Sports Injury Recovery</option>
-                          <option value="pain-management">Pain Management</option>
-                          <option value="manual-therapy">Manual Therapy</option>
-                          <option value="injury-prevention">Injury Prevention</option>
-                          <option value="group-sessions">Group Sessions</option>
-                        </select>
-                      </div>
+                      
                     </div>
 
                     <div className="group">
@@ -261,7 +225,7 @@ const Contact = () => {
                         name="message"
                         value={formData.message}
                         onChange={handleInputChange}
-                        placeholder="Tell us about your condition or any specific concerns..."
+                        placeholder="How do you want us to improve"
                         className="min-h-[120px] resize-none focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
                       />
                     </div>
@@ -281,26 +245,7 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Map Section */}
-          <div className="mt-16 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <Card className="border-0 shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 group">
-              <div className="h-96 bg-gradient-to-r from-physio-blue/20 to-physio-green/20 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-physio-blue/10 to-physio-green/10 group-hover:from-physio-blue/20 group-hover:to-physio-green/20 transition-all duration-500"></div>
-                <div className="text-center relative z-10 transform group-hover:scale-105 transition-transform duration-300">
-                  <MapPin className="w-16 h-16 text-physio-blue mx-auto mb-4 group-hover:animate-bounce" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Find Us Here</h3>
-                  <p className="text-gray-600">123 Health Street, Medical District, New York</p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4 hover:bg-physio-blue hover:text-white transition-all duration-300"
-                    onClick={() => window.open('https://maps.google.com?q=123+Health+Street,+Medical+District,+New+York,+NY+10001', '_blank')}
-                  >
-                    Get Directions
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          </div>
+          
         </div>
       </section>
 
