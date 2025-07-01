@@ -79,7 +79,6 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    
     {
       icon: Clock,
       title: "Business Hours",
@@ -111,39 +110,38 @@ const Contact = () => {
 
   return (
     <>
-      <section id="contact" className="section-padding bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto">
+      <section id="contact" className="bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-16">
+        <div className="container mx-auto max-w-7xl">
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-            <h2 className="text-4xl lg:text-5xl font-playfair font-bold mb-6">
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-bold mb-4 sm:mb-6">
               Get In <span className="text-gradient">Touch</span>
             </h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
               Ready to start your healing journey? Contact us today to schedule your consultation
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-12">
-            
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
             {/* Contact Information */}
-            <div className="lg:col-span-1 space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <div className="space-y-4 sm:space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               {contactInfo.map((info, index) => (
                 <Card 
                   key={info.title} 
-                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group transform hover:scale-105 hover:-translate-y-2 cursor-pointer"
+                  className="border-0 shadow-md hover:shadow-lg transition-all duration-300 group transform hover:scale-105 cursor-pointer"
                   onClick={() => handleCardClick(info.type)}
                 >
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className={`w-12 h-12 ${info.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                        <info.icon className={`${info.color} w-6 h-6 group-hover:animate-pulse`} />
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex items-start space-x-3 sm:space-x-4">
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 ${info.bgColor} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                        <info.icon className={`${info.color} w-5 h-5 sm:w-6 sm:h-6 group-hover:animate-pulse`} />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-physio-blue transition-colors duration-300">{info.title}</h3>
+                        <h3 className="font-semibold text-gray-900 mb-2 text-base sm:text-lg group-hover:text-physio-blue transition-colors duration-300">{info.title}</h3>
                         {info.details.map((detail, idx) => (
-                          <p key={idx} className="text-gray-600 text-sm hover:text-gray-800 transition-colors duration-300">{detail}</p>
+                          <p key={idx} className="text-gray-600 text-xs sm:text-sm hover:text-gray-800 transition-colors duration-300">{detail}</p>
                         ))}
-                        <div className="mt-3">
+                        <div className="mt-2 sm:mt-3">
                           <span className="text-xs text-physio-blue font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             Click to {info.action}
                           </span>
@@ -153,24 +151,20 @@ const Contact = () => {
                   </CardContent>
                 </Card>
               ))}
-
-              {/* Quick Book Button */}
-              
             </div>
 
             {/* Contact Form */}
             <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <Card className="border-0 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-playfair font-bold mb-6 text-gray-900">
+              <Card className="border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <CardContent className="p-4 sm:p-6 lg:p-8">
+                  <h3 className="text-xl sm:text-2xl font-playfair font-bold mb-4 sm:mb-6 text-gray-900">
                     Send Us a Message
                   </h3>
-                  
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                       <div className="group">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
-                        Name *
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2 group-hover:text-physio-blue transition-colors duration-300">
+                          Name *
                         </label>
                         <Input
                           name="name"
@@ -178,12 +172,11 @@ const Contact = () => {
                           onChange={handleInputChange}
                           placeholder="Enter your name"
                           required
-                          className="h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
+                          className="h-10 sm:h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300 text-sm sm:text-base"
                         />
                       </div>
-                      
                       <div className="group">
-                         <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2 group-hover:text-physio-blue transition-colors duration-300">
                           Phone Number
                         </label>
                         <Input
@@ -192,51 +185,43 @@ const Contact = () => {
                           value={formData.phone}
                           onChange={handleInputChange}
                           placeholder="Enter your phone number"
-                          className="h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
-                        />
-                        
-                      </div>
-                    </div>
-
-                    <div >
-                      <div className="group">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
-                          Email Address *
-                        </label>
-                        <Input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder="Enter your email"
-                          required
-                          className="h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
+                          className="h-10 sm:h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300 text-sm sm:text-base"
                         />
                       </div>
-                      
-                      
                     </div>
-
                     <div className="group">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-physio-blue transition-colors duration-300">
+                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2 group-hover:text-physio-blue transition-colors duration-300">
+                        Email Address *
+                      </label>
+                      <Input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Enter your email"
+                        required
+                        className="h-10 sm:h-12 focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300 text-sm sm:text-base"
+                      />
+                    </div>
+                    <div className="group">
+                      <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2 group-hover:text-physio-blue transition-colors duration-300">
                         Message
                       </label>
                       <Textarea
                         name="message"
                         value={formData.message}
                         onChange={handleInputChange}
-                        placeholder="How do you want us to improve"
-                        className="min-h-[120px] resize-none focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300"
+                        placeholder="How can we help you?"
+                        className="min-h-[100px] sm:min-h-[120px] resize-none focus:ring-physio-blue focus:border-physio-blue hover:border-physio-blue/50 transition-all duration-300 text-sm sm:text-base"
                       />
                     </div>
-
                     <Button 
                       type="submit" 
                       size="lg" 
                       disabled={isLoading}
-                      className="w-full bg-gradient-physio hover:opacity-90 transition-all duration-300 transform hover:scale-105 hover:shadow-lg h-12 group"
+                      className="w-full bg-gradient-physio hover:opacity-90 transition-all duration-300 h-10 sm:h-12 text-sm sm:text-base group"
                     >
-                      <Send size={18} className="mr-2 group-hover:translate-x-1 transition-transform duration-300" />
+                      <Send size={16} className="mr-2 group-hover:translate-x-1 transition-transform duration-300" />
                       {isLoading ? 'Sending...' : 'Send Message'}
                     </Button>
                   </form>
@@ -244,8 +229,6 @@ const Contact = () => {
               </Card>
             </div>
           </div>
-
-          
         </div>
       </section>
 
