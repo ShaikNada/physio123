@@ -1,5 +1,6 @@
 
 import React from 'react';
+
 import { Activity, Heart, Zap, Shield, Users, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 

@@ -32,14 +32,11 @@ const Footer = () => {
           
           {/* Company Info */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-physio rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">P</span>
-              </div>
-              <span className="text-2xl font-playfair font-bold">
-                PhysioHeal
-              </span>
-            </div>
+            <div className="flex items-center space-x-2 transform hover:scale-105 transition-transform duration-300">
+            <span className="text-2xl font-playfair font-bold text-physio-blue hover:text-physio-green transition-colors duration-300">
+              <img src="./logoo.png" alt="Logo" className="w-80 h-50 object-contain" />
+            </span>
+          </div>
             
             <p className="text-gray-400 leading-relaxed">
               Professional physiotherapy services dedicated to helping you achieve 
@@ -103,12 +100,12 @@ const Footer = () => {
               
               <div className="flex items-center space-x-3">
                 <Phone className="text-physio-green w-5 h-5" />
-                <p className="text-gray-400">(123) 456-7890</p>
+                <p className="text-gray-400">(91) 8897261748</p>
               </div>
               
               <div className="flex items-center space-x-3">
                 <Mail className="text-physio-teal w-5 h-5" />
-                <p className="text-gray-400">info@physioheal.com</p>
+                <p className="text-gray-400">shaiknaveed7007@gmail.com</p>
               </div>
             </div>
           </div>
@@ -118,7 +115,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
-              © 2024 PhysioHeal. All rights reserved.
+              © 2024 Expert Consultants. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">

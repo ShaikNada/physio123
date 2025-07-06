@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,13 +26,19 @@ const Contact = () => {
     setIsLoading(true);
     
     try {
+      // Save form data to Firebase
       await saveContactForm(formData);
       console.log('Contact form submitted:', formData);
       toast({
         title: "Message Sent!",
         description: "Thank you for contacting us. We'll get back to you soon.",
       });
-      
+
+      // Prepare Gmail compose URL with form data
+      const emailBody = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone || 'Not provided'}%0D%0AMessage: ${formData.message}`;
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=shaiknaveed7007@gmail.com&su=Physiotherapy Inquiry&body=${encodeURIComponent(emailBody)}`;
+      window.open(gmailUrl, '_blank');
+
       // Reset form
       setFormData({
         name: '',
@@ -44,7 +51,7 @@ const Contact = () => {
       console.error('Error submitting contact form:', error);
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: "Failed to save message. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -52,7 +59,7 @@ const Contact = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -65,7 +72,7 @@ const Contact = () => {
         window.open('tel:+91 8897261748', '_self');
         break;
       case 'email':
-        window.open('mailto:info@physioheal.com?subject=Physiotherapy Inquiry&body=Hello, I would like to inquire about your services.', '_self');
+        window.open('https://mail.google.com/mail/?view=cm&fs=1&to=shaiknaveed7007@gmail.com&su=Physiotherapy Inquiry&body=Hello, I would like to inquire about your services.', '_blank');
         break;
       case 'location':
         window.open('https://maps.google.com?q=123+Health+Street,+Medical+District,+New+York,+NY+10001', '_blank');
@@ -100,7 +107,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email Us",
-      details: ["info@physioheal.com", "appointments@physioheal.com"],
+      details: ["shaiknaveed7007@gmail.com"],
       color: "text-physio-teal",
       bgColor: "bg-physio-teal/10",
       type: "email",
